@@ -97,14 +97,10 @@ export default function ChartOracleApp() {
   const [captureBusy, setCaptureBusy] = useState(false);
 
   useEffect(() => {
-    if (!file) {
-      setPreviewUrl(null);
-      return;
-    }
-    const url = URL.createObjectURL(file);
-    setPreviewUrl(url);
-    return () => URL.revokeObjectURL(url);
-  }, [file]);
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
   useEffect(() => {
     if (!isAnalyzing) return;
@@ -125,6 +121,7 @@ export default function ChartOracleApp() {
       setError("The chart image is larger than the 10 MB secure upload limit.");
       return;
     }
+    setPreviewUrl(URL.createObjectURL(nextFile));
     setFile(nextFile);
   }
 
@@ -231,6 +228,7 @@ export default function ChartOracleApp() {
 
   function resetChart() {
     setFile(null);
+    setPreviewUrl(null);
     setAnalysis(null);
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
