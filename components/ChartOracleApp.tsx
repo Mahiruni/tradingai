@@ -15,7 +15,6 @@ import {
   LoaderCircle,
   LockKeyhole,
   MonitorUp,
-  RefreshCw,
   ScanLine,
   ShieldCheck,
   Sparkles,
