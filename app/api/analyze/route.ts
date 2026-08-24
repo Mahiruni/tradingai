@@ -37,11 +37,14 @@ export async function POST(request: Request) {
 
     const provider = getChartAnalysisProvider();
     const analysis = await provider.analyze({
-      instrument: cleanField(form.get("instrument")),
-      timeframe: cleanField(form.get("timeframe")),
-      fileName: chart.name.slice(0, 180),
-      mimeType: chart.type,
-      fileSize: chart.size,
+      image: chart,
+      metadata: {
+        instrument: cleanField(form.get("instrument")),
+        timeframe: cleanField(form.get("timeframe")),
+        fileName: chart.name.slice(0, 180),
+        mimeType: chart.type,
+        fileSize: chart.size,
+      },
     });
 
     return NextResponse.json(analysis, {
